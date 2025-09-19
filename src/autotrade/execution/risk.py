@@ -3,6 +3,7 @@ from autotrade.models.order import OrderRequest
 
 log = logging.getLogger("risk")
 
+
 class RiskManager:
     def __init__(self, max_orders: int = 5, min_price: float | None = None):
         self.max_orders = max_orders

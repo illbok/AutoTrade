@@ -2,14 +2,17 @@ from pydantic_settings import BaseSettings
 from pydantic import BaseModel
 import yaml
 
+
 class StrategyCfg(BaseModel):
     name: str
     params: dict
     symbols: list[str]
 
+
 class ApiCfg(BaseModel):
     key: str | None = None
     secret: str | None = None
+
 
 class Settings(BaseSettings):
     env: str = "dev"

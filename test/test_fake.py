@@ -1,6 +1,7 @@
 from autotrade.exchanges.fake import FakeExchange
 from autotrade.models.order import OrderRequest
 
+
 def test_fake_exchange_order():
     ex = FakeExchange()
     req = OrderRequest.market("BTC/USDT", "buy", 0.001)
