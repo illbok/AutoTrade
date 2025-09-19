@@ -7,9 +7,11 @@ Requires-Dist: typer>=0.12.3
 Requires-Dist: pydantic>=2.7.0
 Requires-Dist: pydantic-settings>=2.2.1
 Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: requests>=2.32.0
 Provides-Extra: dev
 Requires-Dist: black>=24.4.0; extra == "dev"
 Requires-Dist: ruff>=0.4.0; extra == "dev"
 Requires-Dist: pytest>=8.2.0; extra == "dev"
 Requires-Dist: mypy>=1.10.0; extra == "dev"
 Requires-Dist: pre-commit>=3.7.0; extra == "dev"
+Requires-Dist: types-PyYAML; extra == "dev"

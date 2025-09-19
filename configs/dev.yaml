@@ -13,4 +13,5 @@ strategy:
 data:
   interval: "1m"
   window: 60
+#   csv: "data/BTCUSDT_1m.csv"
 risk: {}

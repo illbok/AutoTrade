@@ -12,9 +12,15 @@ src/autotrade.egg-info/entry_points.txt
 src/autotrade.egg-info/requires.txt
 src/autotrade.egg-info/top_level.txt
 src/autotrade/analysis/indicators.py
+src/autotrade/backtest/__init__.py
+src/autotrade/backtest/broker.py
+src/autotrade/backtest/engine.py
+src/autotrade/backtest/metrics.py
 src/autotrade/data/candles.py
+src/autotrade/data/csv_loader.py
 src/autotrade/exchanges/base.py
 src/autotrade/exchanges/fake.py
+src/autotrade/exchanges/upbit.py
 src/autotrade/execution/executor.py
 src/autotrade/execution/risk.py
 src/autotrade/models/__init__.py
@@ -24,4 +30,6 @@ src/autotrade/strategies/__init__.py
 src/autotrade/strategies/base.py
 src/autotrade/strategies/registry.py
 src/autotrade/strategies/sma_cross.py
-test/test_fake.py
+tests/test_backtest_report.py
+tests/test_fake.py
+tests/test_risk.py

@@ -12,10 +12,15 @@ dependencies = [
   "pydantic>=2.7.0",
   "pydantic-settings>=2.2.1",
   "pyyaml>=6.0.1",
+  "requests>=2.32.0",
 ]
 
 [project.scripts]
 autotrade = "autotrade.cli:app"
+
+[tool.mypy]
+plugins = []
+ignore_missing_imports = false
 
 [tool.setuptools.packages.find]
 where = ["src"]

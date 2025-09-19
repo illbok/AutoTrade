@@ -1,0 +1,2 @@
+final_equity=10029.98
+cash=10029.98, qty=0.00000000, avg=0.00, last_price=29999.05
