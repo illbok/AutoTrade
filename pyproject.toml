@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autotrade"
+version = "0.1.0"
+description = "Modular crypto autotrade (scaffold)"
+requires-python = ">=3.10"
+dependencies = [
+  "typer>=0.12.3",
+  "pydantic>=2.7.0",
+  "pydantic-settings>=2.2.1",
+  "pyyaml>=6.0.1",
+]
+
+[project.scripts]
+autotrade = "autotrade.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.optional-dependencies]
+dev = [
+  "black>=24.4.0",
+  "ruff>=0.4.0",
+  "pytest>=8.2.0",
+  "mypy>=1.10.0",
+  "pre-commit>=3.7.0"
+]

@@ -1,0 +1,2 @@
+[console_scripts]
+autotrade = autotrade.cli:app

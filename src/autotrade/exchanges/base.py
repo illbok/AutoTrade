@@ -1,0 +1,9 @@
+from typing import Protocol, Iterable
+from autotrade.models.market import Ticker, Candle
+from autotrade.models.order import OrderRequest, Order
+
+class IExchangeClient(Protocol):
+    name: str
+    def get_ticker(self, symbol: str) -> Ticker: ...
+    def get_candles(self, symbol: str, interval: str, limit: int = 500) -> Iterable[Candle]: ...
+    def create_order(self, req: OrderRequest) -> Order: ...
