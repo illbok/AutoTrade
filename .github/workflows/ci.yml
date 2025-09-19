@@ -33,6 +33,7 @@ jobs:
           pip install -e .[dev]
           # mypy가 yaml 스텁을 찾도록 보강 (pre-commit 훅과 일치)
           pip install types-PyYAML
+          pip install types-requests
 
       - name: Black (format check)
         run: black --check .
