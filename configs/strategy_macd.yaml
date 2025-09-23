@@ -1,0 +1,9 @@
+env: dev
+paper: true
+api: { key: null, secret: null }
+strategy:
+  name: macd
+  params: { fast: 12, slow: 26, signal: 9, use_crossover: true, cooldown: 3, qty: 0.001 }
+  symbols: ["BTC/USDT"]
+data: { interval: "1m", window: 60 }
+risk: {}
