@@ -1,0 +1,14 @@
+# configs/strategy_rsi.yaml
+# -----------------------------------------
+# RSI 전략 파라미터 예시 설정
+# 프로젝트의 설정 로더에 맞춰 key 이름을 조정하세요.
+strategy:
+  name: "RSI"
+  class: "src.strategies.rsi_strategy.RSIStrategy"
+  params:
+    period: 14
+    buy_threshold: 30.0
+    sell_threshold: 70.0
+    price_col: "close"
+    use_crossover: true
+    cooldown: 3

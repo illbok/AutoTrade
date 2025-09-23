@@ -15,3 +15,8 @@ data:
   window: 60
 #   csv: "data/BTCUSDT_1m.csv"
 risk: {}
+exchange:
+  name: upbit
+  base_url: "https://api.upbit.com/v1"
+paper: true
+live: false

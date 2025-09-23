@@ -3,6 +3,7 @@ pyproject.toml
 src/autotrade/__init__.py
 src/autotrade/app.py
 src/autotrade/cli.py
+src/autotrade/live.py
 src/autotrade/logging_config.py
 src/autotrade/settings.py
 src/autotrade.egg-info/PKG-INFO
@@ -29,7 +30,9 @@ src/autotrade/models/order.py
 src/autotrade/strategies/__init__.py
 src/autotrade/strategies/base.py
 src/autotrade/strategies/registry.py
+src/autotrade/strategies/rsi.py
 src/autotrade/strategies/sma_cross.py
 tests/test_backtest_report.py
 tests/test_fake.py
 tests/test_risk.py
+tests/test_rsi_strategy.py

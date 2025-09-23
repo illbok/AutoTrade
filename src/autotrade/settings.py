@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import yaml
 
 
@@ -14,13 +14,20 @@ class ApiCfg(BaseModel):
     secret: str | None = None
 
 
+class ExchangeCfg(BaseModel):
+    name: str = "upbit"  # upbit 고정(확장 여지)
+    base_url: str = "https://api.upbit.com/v1"
+
+
 class Settings(BaseSettings):
     env: str = "dev"
     api: ApiCfg = ApiCfg()
+    exchange: ExchangeCfg = ExchangeCfg()
     strategy: StrategyCfg
-    data: dict
-    risk: dict = {}
-    paper: bool = True
+    data: dict = Field(default_factory=lambda: {"interval": "1m", "window": 60})
+    risk: dict = Field(default_factory=dict)
+    paper: bool = True  # 기본: 페이퍼(드라이런)
+    live: bool = False  # CLI에서 --live 1로만 실거래 허용
 
     @classmethod
     def load(cls, path: str):
