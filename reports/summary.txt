@@ -1,2 +1,7 @@
 final_equity=10000.00
 cash=10000.00, qty=0.00000000, avg=0.00, last_price=29999.05
+trades=0, closed_trades=0
+win_rate=0.00%
+avg_trade_pnl=0.0000
+max_drawdown=0.00% (peak=0.00 -> trough=0.00)
+sharpe=-0.0075

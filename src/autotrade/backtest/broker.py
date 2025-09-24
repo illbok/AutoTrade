@@ -22,7 +22,11 @@ class PaperBroker:
         self.slippage = slippage
 
     def fill(
-        self, orders: List[OrderRequest], price: float, pf: Portfolio
+        self,
+        orders: List[OrderRequest],
+        price: float,
+        pf: Portfolio,
+        ts: int | None = None,
     ) -> List[Order]:
         """시장가 가정. price에 슬리피지 적용, 수수료 현금 차감/가산, 평단 업데이트."""
         out: List[Order] = []
@@ -54,6 +58,13 @@ class PaperBroker:
                     pf.pos.avg = 0.0
 
             out.append(
-                Order(id=f"BK{i}", symbol=o.symbol, side=o.side, qty=o.qty, price=px)
+                Order(
+                    id=f"BK{i}",
+                    symbol=o.symbol,
+                    side=o.side,
+                    qty=o.qty,
+                    price=px,
+                    ts=ts,
+                )
             )
         return out

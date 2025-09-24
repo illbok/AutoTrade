@@ -1,6 +1,7 @@
+# src/autotrade/backtest/metrics.py
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Iterable, List, Dict
+from typing import Iterable, List, Tuple
 from autotrade.models.market import Candle
 from autotrade.models.order import Order
 
@@ -10,43 +11,65 @@ class EquityPoint:
     ts: int
     equity: float
     price: float
+    cash: float
+    qty: float
+    avg: float
 
 
-def compute_equity_curve(
-    cash_start: float,
-    fills: List[Order],
-    candles: Iterable[Candle],
-    symbol: str,
-) -> List[EquityPoint]:
-    """단일 심볼, 단순 현금+보유수량 기반 에쿼티 곡선."""
-    fills_by_ts: Dict[int, float] = {}  # ts -> net_qty change @ fill price
-    # 간단화를 위해 주문 체결 시점 가격을 보유수량 가중 평균에 반영하지 않고
-    # 보유수량만 변경(마켓가 체결로 가정)
-    # 필요 시, fills에 체결가를 넣어 평균단가 추적 로직을 추가하세요.
-    qty = 0.0
-    equity = cash_start
-    curve: List[EquityPoint] = []
+def max_drawdown(equity: List[float]) -> Tuple[float, float, float]:
+    """MDD 계산: (mdd, peak, trough). mdd는 음수(%)로 반환."""
+    peak = -1e30
+    mdd = 0.0
+    peak_v = trough_v = 0.0
+    cur_peak_v = 0.0
+    for v in equity:
+        if v > peak:
+            peak = v
+            cur_peak_v = v
+        dd = (v / cur_peak_v - 1.0) if cur_peak_v else 0.0
+        if dd < mdd:
+            mdd = dd
+            peak_v = cur_peak_v
+            trough_v = v
+    return (mdd, peak_v, trough_v)
 
-    # 체결 수량 집계
-    # Order에 체결가가 있다면 avg price를 추적하도록 확장 가능
+
+def trade_pnls(fills: List[Order]) -> List[float]:
+    """아주 단순: buy 후 sell에서 확정(PnL= (sell_px - buy_px)*qty). 포지션 누적이 아닌 1:1 매칭 가정."""
+    pnls: List[float] = []
+    stack: List[Order] = []
     for f in fills:
-        # 가정: buy는 +qty, sell은 -qty
-        dq = f.qty if f.side.lower() == "buy" else -f.qty
-        fills_by_ts.setdefault(
-            0, 0.0
-        )  # 단순화(체결 시점 미사용). 필요 시 Order에 ts 추가.
-        fills_by_ts[0] += dq
+        if f.side.lower() == "buy":
+            stack.append(f)
+        else:
+            if stack:
+                b = stack.pop(0)
+                if b.price is not None and f.price is not None:
+                    pnls.append((f.price - b.price) * min(b.qty, f.qty))
+    return pnls
 
-    # 캔들 순회하며 에쿼티 계산 (종가 기준)
+
+def sharpe_ratio(returns: List[float], eps: float = 1e-12) -> float:
+    """간단 샤프(무위험 0, 비연율화). returns는 기간 수익률 시퀀스."""
+    if not returns:
+        return 0.0
+    n = len(returns)
+    mean = sum(returns) / n
+    var = sum((r - mean) ** 2 for r in returns) / max(n - 1, 1)
+    std = var**0.5
+    return mean / (std + eps)
+
+
+def equity_curve_from_portfolio(
+    candles: Iterable[Candle],
+    cash: float,
+    qty: float,
+    avg: float,
+) -> List[EquityPoint]:
+    out: List[EquityPoint] = []
     for c in candles:
-        if 0 in fills_by_ts:
-            qty += fills_by_ts[0]
-            # 체결대금은 반영하지 않음(데모). 실제는 cash에서 체결가*수량을 차감/증가하세요.
-            fills_by_ts.pop(0)
-
-        equity = equity  # 현금 변화 없음(데모). 실제는 cash 업데이트 필요.
-        # 보유수량 평가손익
-        equity_marked = equity + qty * c.c
-        curve.append(EquityPoint(ts=c.ts, equity=equity_marked, price=c.c))
-
-    return curve
+        eq = cash + qty * c.c
+        out.append(
+            EquityPoint(ts=c.ts, equity=eq, price=c.c, cash=cash, qty=qty, avg=avg)
+        )
+    return out

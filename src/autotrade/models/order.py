@@ -21,3 +21,4 @@ class Order:
     side: str
     qty: float
     price: Optional[float] = None
+    ts: Optional[int] = None

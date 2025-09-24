@@ -13,6 +13,7 @@ dependencies = [
   "pydantic-settings>=2.2.1",
   "pyyaml>=6.0.1",
   "requests>=2.32.0",
+  "matplotlib>=3.9",
 ]
 
 [project.scripts]
