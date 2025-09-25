@@ -3,6 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 import csv
 from typing import Dict, Iterable, List
+import matplotlib
+
+matplotlib.use("Agg")  # GUI 백엔드 사용 안함
 import matplotlib.pyplot as plt  # 차트 저장용
 from autotrade.settings import Settings
 from autotrade.data.csv_loader import load_candles_csv

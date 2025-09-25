@@ -34,6 +34,7 @@ src/autotrade/strategies/macd.py
 src/autotrade/strategies/registry.py
 src/autotrade/strategies/rsi.py
 src/autotrade/strategies/sma_cross.py
+tests/test_backtest_artifacts.py
 tests/test_backtest_report.py
 tests/test_bbands_strategy.py
 tests/test_fake.py
