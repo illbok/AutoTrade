@@ -38,6 +38,8 @@ tests/test_backtest_artifacts.py
 tests/test_backtest_report.py
 tests/test_bbands_strategy.py
 tests/test_fake.py
+tests/test_live_guard.py
 tests/test_macd_strategy.py
 tests/test_risk.py
 tests/test_rsi_strategy.py
+tests/test_upbit_signing.py

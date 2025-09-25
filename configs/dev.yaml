@@ -1,22 +1,24 @@
 env: dev
 paper: true
+live : false
 api: 
   key: null
   secret: null
 strategy:
-  name: sma_cross
+  name: macd
   params:
-    fast: 5
-    slow: 10
-  symbols:
-    - "BTC/USDT"
+    fast: 12
+    slow: 26
+    signal: 9
+    use_crossover: true
+    cooldown: 3
+    qty: 10000
+  symbols: ["KRW-BTC"]
 data:
   interval: "1m"
   window: 60
 #   csv: "data/BTCUSDT_1m.csv"
-risk: {}
 exchange:
   name: upbit
   base_url: "https://api.upbit.com/v1"
-paper: true
-live: false
+risk: {}
