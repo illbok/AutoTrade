@@ -1,10 +1,8 @@
 import logging
 
-from autotrade.models.order import OrderRequest, Order
+from autotrade.models.order import OrderRequest
 from autotrade.exchanges.base import IExchangeClient
-from autotrade.execution.risk import (
-    RiskManager,
-)  # ← Milestone2에서 추가한 리스크 매니저
+from autotrade.execution.risk import RiskManager
 
 log = logging.getLogger("executor")
 
@@ -12,21 +10,19 @@ log = logging.getLogger("executor")
 class Executor:
     def __init__(self, exchange: IExchangeClient):
         self.exchange = exchange
-        self.risk = RiskManager(max_orders=5)
+        # RiskManager 기본값 설정 (필요시 config에서 받아 적용)
+        self.risk = RiskManager(max_orders=5, min_qty=0.0001, cooldown_s=2)
 
-    def submit(self, orders: list[OrderRequest]) -> list[Order]:
-        executed: list[Order] = []
+    def update_equity(self, equity: float):
+        self.risk.update_equity(equity)
 
-        # 리스크 매니저로 필터링
+    def submit(self, orders: list[OrderRequest]):
+        executed = []
         safe_orders = self.risk.validate(orders)
-
         for o in safe_orders:
-            order = self.exchange.create_order(
-                o
-            )  # IExchangeClient 프로토콜을 따르는 객체
+            order = self.exchange.create_order(o)
             executed.append(order)
             log.info(
                 f"Executed {order.side} {order.qty} {order.symbol} @ {order.price} (id={order.id})"
             )
-
         return executed
