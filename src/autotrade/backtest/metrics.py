@@ -5,6 +5,7 @@ from typing import Iterable, List, Tuple
 from autotrade.models.market import Candle
 from autotrade.models.order import Order
 import statistics
+import math
 
 
 @dataclass
@@ -77,10 +78,29 @@ def equity_curve_from_portfolio(
 
 
 def cagr(equity_curve: List[float], years: float) -> float:
-    """CAGR: (final/initial)^(1/years) - 1"""
-    if not equity_curve or equity_curve[0] <= 0 or years <= 0:
+    """
+    안전한 CAGR:
+    - 기간이 너무 짧으면(연환산이 의미 없으면) 0.0 반환
+    - 시작/끝 에쿼티가 양수일 때만 계산
+    - 로그 방식(exp(log(ratio)/years)-1)으로 오버플로 완화
+    """
+    MIN_YEARS = 1.0 / 365.0  # 최소 1일 이상 데이터에서만 연환산
+    if (not equity_curve) or years < MIN_YEARS:
         return 0.0
-    return (equity_curve[-1] / equity_curve[0]) ** (1.0 / years) - 1.0
+    initial = float(equity_curve[0])
+    final = float(equity_curve[-1])
+    if initial <= 0.0 or final <= 0.0:
+        return 0.0
+    ratio = final / initial
+    try:
+        val = math.exp(math.log(ratio) / years) - 1.0
+        # 수치 폭주 방지용 클램핑 (과도한 이상치 차단)
+        if not math.isfinite(val):
+            return 0.0
+        # 선택: 현실적인 범위로 잘라내기
+        return max(-0.9999, min(val, 100.0))
+    except (ValueError, OverflowError):
+        return 0.0
 
 
 def calmar(cagr_val: float, mdd: float) -> float:

@@ -144,7 +144,8 @@ def backtest(
     }
     mins = mins_map.get(interval, 1)
     # 총 기간(년) ≈ (캔들개수 * 캔들분) / (60*24*365)
-    years = max((len(candles) * mins) / (60 * 24 * 365), 1e-9)
+    years = (len(candles) * mins) / (60 * 24 * 365)
+    years = max(years, 1.0 / 365.0)
 
     # CAGR/Calmar/Sortino + 드로우다운/리커버리 기간
     cagr_val = cagr(eq_vals, years)  # eq_vals는 위에서 만든 에쿼티 시퀀스
