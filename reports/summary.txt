@@ -5,3 +5,7 @@ win_rate=0.00%
 avg_trade_pnl=0.0000
 max_drawdown=0.00% (peak=0.00 -> trough=0.00)
 sharpe=-0.0075
+cagr=0.00%
+calmar=0.0000
+sortino=-0.0148
+mdd_period=0, recovery_period=1

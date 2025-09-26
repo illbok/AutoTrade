@@ -19,6 +19,10 @@ from autotrade.backtest.metrics import (
     max_drawdown,
     trade_pnls,
     sharpe_ratio,
+    cagr,
+    calmar,
+    sortino,
+    drawdown_periods,
 )
 
 
@@ -126,6 +130,28 @@ def backtest(
             rets.append(p1 / p0 - 1.0)
     sharpe = sharpe_ratio(rets)
 
+    # 분봉 간격(분) → 연 단위 환산 계수 계산
+    interval = s.data.get("interval", "1m")
+    mins_map = {
+        "1m": 1,
+        "3m": 3,
+        "5m": 5,
+        "10m": 10,
+        "15m": 15,
+        "30m": 30,
+        "60m": 60,
+        "240m": 240,
+    }
+    mins = mins_map.get(interval, 1)
+    # 총 기간(년) ≈ (캔들개수 * 캔들분) / (60*24*365)
+    years = max((len(candles) * mins) / (60 * 24 * 365), 1e-9)
+
+    # CAGR/Calmar/Sortino + 드로우다운/리커버리 기간
+    cagr_val = cagr(eq_vals, years)  # eq_vals는 위에서 만든 에쿼티 시퀀스
+    calmar_val = calmar(cagr_val, mdd)  # mdd는 max_drawdown의 첫 반환값(음수 비율)
+    sortino_val = sortino(rets)  # rets는 위에서 만든 수익률 시퀀스
+    mdd_period, recovery_period = drawdown_periods(eq_vals)
+
     summary_path = out / "summary.txt"
     with summary_path.open("w", encoding="utf-8") as f:
         f.write(f"final_equity={final_equity:.2f}\n")
@@ -139,6 +165,10 @@ def backtest(
             f"max_drawdown={mdd*100:.2f}% (peak={peak_v:.2f} -> trough={trough_v:.2f})\n"
         )
         f.write(f"sharpe={sharpe:.4f}\n")
+        f.write(f"cagr={cagr_val*100:.2f}%\n")
+        f.write(f"calmar={calmar_val:.4f}\n")
+        f.write(f"sortino={sortino_val:.4f}\n")
+        f.write(f"mdd_period={mdd_period}, recovery_period={recovery_period}\n")
 
     # 4) 차트 저장 (equity.png) - 가격 & 에쿼티 같은 축 겹치면 스케일이 달라지므로 보조축 사용
     if candles:
