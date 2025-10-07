@@ -5,6 +5,7 @@ pyyaml>=6.0.1
 requests>=2.32.0
 matplotlib>=3.9
 PyJWT>=2.9.0
+python-dotenv>=1.0.1
 
 [dev]
 black>=24.4.0

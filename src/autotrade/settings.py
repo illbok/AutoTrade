@@ -1,6 +1,9 @@
 from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Field
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv()  # .env 파일 로드(없어도 무방)
 
 
 class StrategyCfg(BaseModel):

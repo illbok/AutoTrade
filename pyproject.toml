@@ -15,6 +15,7 @@ dependencies = [
   "requests>=2.32.0",
   "matplotlib>=3.9",
   "PyJWT>=2.9.0",
+  "python-dotenv>=1.0.1",
 ]
 
 [project.scripts]
