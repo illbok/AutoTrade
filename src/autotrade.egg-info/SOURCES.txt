@@ -19,6 +19,7 @@ src/autotrade/backtest/engine.py
 src/autotrade/backtest/metrics.py
 src/autotrade/data/candles.py
 src/autotrade/data/csv_loader.py
+src/autotrade/data/downloader.py
 src/autotrade/exchanges/base.py
 src/autotrade/exchanges/fake.py
 src/autotrade/exchanges/upbit.py
@@ -37,8 +38,11 @@ src/autotrade/strategies/sma_cross.py
 tests/test_backtest_artifacts.py
 tests/test_backtest_report.py
 tests/test_bbands_strategy.py
+tests/test_cli_download.py
+tests/test_downloader_smoke.py
 tests/test_fake.py
 tests/test_live_guard.py
+tests/test_live_smoke.py
 tests/test_macd_strategy.py
 tests/test_risk.py
 tests/test_risk_manager_limits.py

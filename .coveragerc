@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = 
+    src/autotrade
+omit =
+    */__init__.py
+    */tests/*
+    */.venv/*
+
+[report]
+show_missing = True
+skip_covered = True
+precision = 2

@@ -37,3 +37,10 @@ dev = [
   "types-PyYAML",
   "types-requests",
 ]
+
+[tool.pytest.ini_options]
+addopts = "-q --disable-warnings"
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore::DeprecationWarning:pydantic.*",
+]
