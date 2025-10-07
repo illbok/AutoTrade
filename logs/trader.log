@@ -53,3 +53,19 @@ Order rejected: max order limit reached
 [9/10] executed=0
 Order rejected: max order limit reached
 [10/10] executed=0
+2025-10-07 16:11:21,801 | INFO | live | DRY-RUN 모드로 실행합니다 (실제 주문이 나가지 않습니다).
+2025-10-07 16:11:22,196 | INFO | executor | Executed buy 10000 KRW-BTC @ 176883000.0 (id=DRY-1759821082)
+2025-10-07 16:11:22,197 | DEBUG | notify | No notifier configured; message dropped: [dev] BUY 10000 KRW-BTC @ 176883000.0 (id=DRY-1759821082)
+2025-10-07 16:11:22,197 | INFO | live | [1/5] executed=1
+2025-10-07 16:11:28,230 | INFO | executor | Executed buy 10000 KRW-BTC @ 176850000.0 (id=DRY-1759821088)
+2025-10-07 16:11:28,230 | DEBUG | notify | No notifier configured; message dropped: [dev] BUY 10000 KRW-BTC @ 176850000.0 (id=DRY-1759821088)
+2025-10-07 16:11:28,230 | INFO | live | [2/5] executed=1
+2025-10-07 16:11:34,268 | INFO | executor | Executed buy 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821094)
+2025-10-07 16:11:34,269 | DEBUG | notify | No notifier configured; message dropped: [dev] BUY 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821094)
+2025-10-07 16:11:34,269 | INFO | live | [3/5] executed=1
+2025-10-07 16:11:40,323 | INFO | executor | Executed buy 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821100)
+2025-10-07 16:11:40,324 | DEBUG | notify | No notifier configured; message dropped: [dev] BUY 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821100)
+2025-10-07 16:11:40,325 | INFO | live | [4/5] executed=1
+2025-10-07 16:11:46,366 | INFO | executor | Executed buy 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821106)
+2025-10-07 16:11:46,366 | DEBUG | notify | No notifier configured; message dropped: [dev] BUY 10000 KRW-BTC @ 176879000.0 (id=DRY-1759821106)
+2025-10-07 16:11:46,366 | INFO | live | [5/5] executed=1

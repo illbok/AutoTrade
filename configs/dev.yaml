@@ -4,6 +4,9 @@ live : false
 api: 
   key: null
   secret: null
+exchange:
+  name: upbit
+  base_url: "https://api.upbit.com/v1"
 strategy:
   name: macd
   params:
@@ -18,9 +21,6 @@ data:
   interval: "1m"
   window: 60
 #   csv: "data/BTCUSDT_1m.csv"
-exchange:
-  name: upbit
-  base_url: "https://api.upbit.com/v1"
 risk:
   max_orders: 5
   min_qty: 0.0001
